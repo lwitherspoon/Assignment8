@@ -1,12 +1,12 @@
+import java.util.Arrays;
+import java.util.Comparator;
+
 /**
  * Program to sort a two-dimensional array by row then column
- * @author: Laura Witherspoon
+ * @author Laura Witherspoon
  * Assignment: 8.16
  * Date: 9/14/2017
  */
-
-import java.util.Arrays;
-import java.util.Comparator;
 
 public class ArraySort {
 
@@ -15,10 +15,11 @@ public class ArraySort {
      * @param m is the two-dimensional array to sort
      */
     private static void sort(int m[][]) {
-        Arrays.sort(m, new Comparator<int[]>() {
 
+        // Define custom comparator to allow sort of multiple columns in 2D array
+        final Comparator<int[]> arrayComparator = new Comparator<int[]>() {
+            @Override
             public int compare(int[] a, int[] b) {
-
                 if (a[0] == b[0]) {
                     if (a[1] == b[1]) {
                         return Integer.compare(a[2],b[2]);
@@ -29,7 +30,9 @@ public class ArraySort {
                 }
                 return Integer.compare(a[0],b[0]);
             }
-        });
+        };
+
+        Arrays.sort(m, arrayComparator);
     }
 
     /**
@@ -40,6 +43,17 @@ public class ArraySort {
     static int[][] getSortedArray(int[][] array) {
         sort(array);
         return array;
+    }
+
+    static String displayArrayAsString(int array[]) {
+        String result = "{";
+
+        for (int i = 0; i < array.length; i++) {
+            result += array[i];
+            result += (i == array.length - 1 ? "}" : ",");
+        }
+
+        return result;
     }
 
     /**
@@ -68,7 +82,7 @@ public class ArraySort {
 
     public static void main(String[] args) {
 
-        int[][] array = {{4,2,1},{1,7,6},{4,2,5},{1,7,2},{1,1,0},{4,2,5}};
+        int[][] array = {{4, 2},{1, 7},{4, 5},{1, 2},{1, 1},{4, 1}};
 
         // Display original array
         System.out.println("Original unsorted array:");
